@@ -7,14 +7,14 @@ exclude:
   - "/vendor/"
 
 # Site settings
-title: Centrarium
+title: CyanBean
 subtitle: "A simple yet classy theme for your Jekyll website or blog"
 email: blcentra@gmail.com
-name: Ben Centra
+name: Tan Chaofan
 description: > 
   A simple yet classy theme for your Jekyll website or blog.
 baseurl: "/centrarium/" # the subpath of your site, e.g. /blog/
-url: "http://bencentra.github.io" # the base hostname & protocol for your site
+url: "http://cyanbean.github.io" # the base hostname & protocol for your site
 cover: "assets/header_image.jpg"
 logo: "assets/logo.png"
 
@@ -34,7 +34,7 @@ jekyll-archives:
     tag: '/tag/:name/'
 
 # Disqus comments
-disqus_shortname: bencentra
+disqus_shortname: cyanbean
 
 # Google analytics
 # ga_tracking_id: "UA-XXXX-1"
