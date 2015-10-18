@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title:  "Hello World!"
 date:   2015-10-18 13:29:46
