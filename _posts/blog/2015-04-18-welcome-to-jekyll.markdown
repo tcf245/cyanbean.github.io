@@ -37,8 +37,8 @@ demo("hello, world!", 10);</code></pre>
 
 Lightbox has been enabled for images. To create the link that'll launch the lightbox, add <code>data-lightbox</code> and <code>data-title</code> attributes to an <code>&lt;a&gt;</code> tag around your <code>&lt;img&gt;</code> tag. The result is:
 
-<a href="//bencentra.com/assets/images/falcon9_large.jpg" data-lightbox="falcon9-large" data-title="Check out the Falcon 9 from SpaceX">
-  <img src="//bencentra.com/assets/images/falcon9_small.jpg" title="Check out the Falcon 9 from SpaceX">
+<a href="//tcf245.github.io/assets/images/falcon9_large.jpg" data-lightbox="falcon9-large" data-title="Check out the Falcon 9 from SpaceX">
+  <img src="//tcf245.github.io/assets/images/falcon9_small.jpg" title="Check out the Falcon 9 from SpaceX">
 </a>
 
 For more information, check out the [Lightbox][lightbox] website.
