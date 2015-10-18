@@ -7,12 +7,12 @@ exclude:
   - "/vendor/"
 
 # Site settings
-title: CyanBean丶
+title: 丶CyanBean
 subtitle: "It's better to burn out, than fade away."
 email: tcf245@gmail.com
 name: Tan Chaofan
 description: > 
-  "&acute;Cause nothing lasts forever,Even cold November rain."
+  丶CyanBean's blog
 
 baseurl: "/" # the subpath of your site, e.g. /blog/
 url: "http://tcf245.github.io" # the base hostname & protocol for your site
