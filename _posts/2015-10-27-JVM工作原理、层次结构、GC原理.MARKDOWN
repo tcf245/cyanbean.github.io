@@ -47,9 +47,9 @@ JVM层次结构图下图所示：
 3. 当所有的父类加载器都没有加载的时候，再由当前的类加载器加载，并将其放入它自己的缓存中，以便下次有加载请求的时候直接返回。
 
 使用这种模型来组织类加载器之间的关系的好处:
-主要是为了安全性，避免用户自己编写的类动态替换 Java 的一些核心类，比如 String，同时也避免了重复加载，因为 JVM 中区分不同类，不仅仅是根据类名，相同的 class 文件被不同的 `ClassLoader` 加载就是不同的两个类，如果相互转型的话会抛java.lang.ClassCaseException.
+主要是为了安全性，避免用户自己编写的类动态替换 Java 的一些核心类，比如 `String`，同时也避免了重复加载，因为 JVM 中区分不同类，不仅仅是根据类名，相同的 `class` 文件被不同的 `ClassLoader` 加载就是不同的两个类，如果相互转型的话会抛`java.lang.ClassCaseException`.
 
-类加载器 `Classloader` 是具有层次结构的，也就是父子关系。其中，Bootstrap 是所有类加载器的父亲。如下图所示：
+类加载器 `Classloader` 是具有层次结构的，也就是父子关系。其中，`Bootstrap` 是所有类加载器的父亲。如下图所示：
 <a href="//tcf245.github.io/assets/images/java/JVM-classloader.png" data-lightbox="falcon9-large" data-title="Check out the image ">
   <img src="//tcf245.github.io/assets/images/java/JVM-classloader.png" title="Check out the image ">
 </a>
@@ -78,21 +78,21 @@ JVM 运行时数据区 (JVM Runtime Area) 其实就是指 JVM 在运行期间，
 
 4、<strong>Java堆：</strong>被所有线程共享的一块存储区域，在虚拟机启动时创建，它是JVM用来存储对象实例以及数组值的区域，可以认为Java中所有通过new创建的对象的内存都在此分配。
 
-Java堆在JVM启动的时候就被创建，堆中储存了各种对象，这些对象被自动管理内存系统（Automatic Storage Management System，也即是常说的 “Garbage Collector（垃圾回收器）”）所管理。这些对象无需、也无法显示地被销毁。
+Java堆在JVM启动的时候就被创建，堆中储存了各种对象，这些对象被自动管理内存系统`（Automatic Storage Management System`，也即是常说的 “Garbage Collector（垃圾回收器）”）所管理。这些对象无需、也无法显示地被销毁。
 
-JVM将Heap分为两块：新生代New Generation和旧生代Old Generation
+JVM将`Heap`分为两块：新生代`New Generation`和旧生代`Old Generation`
 
 `Note:
 
-* 堆在JVM是所有线程共享的，因此在其上进行对象内存的分配均需要进行加锁，这也是new开销比较大的原因。   
-* 鉴于上面的原因，Sun Hotspot JVM为了提升对象内存分配的效率，对于所创建的线程都会分配一块独立的空间，这块空间又称为TLAB    
-* TLAB仅作用于新生代的Eden Space，因此在编写Java程序时，通常多个小的对象比大的对象分配起来更加高效    
+* 堆在JVM是所有线程共享的，因此在其上进行对象内存的分配均需要进行加锁，这也是`new`开销比较大的原因。   
+* 鉴于上面的原因，`Sun Hotspot JVM`为了提升对象内存分配的效率，对于所创建的线程都会分配一块独立的空间，这块空间又称为`TLAB `   
+* TLAB仅作用于新生代的`Eden Space`，因此在编写Java程序时，通常多个小的对象比大的对象分配起来更加高效    
 `
 
 5、<strong>方法区</strong>
-方法区和堆区域一样，是各个线程共享的内存区域，它用于存储每一个类的结构信息，例如运行时常量池，成员变量和方法数据，构造函数和普通函数的字节码内容，还包括一些在类、实例、接口初始化时用到的特殊方法。当开发人员在程序中通过Class对象中的getName、isInstance等方法获取信息时，这些数据都来自方法区。
+方法区和堆区域一样，是各个线程共享的内存区域，它用于存储每一个类的结构信息，例如运行时常量池，成员变量和方法数据，构造函数和普通函数的字节码内容，还包括一些在类、实例、接口初始化时用到的特殊方法。当开发人员在程序中通过`Class`对象中的`getName`、`isInstance`等方法获取信息时，这些数据都来自方法区。
 
-方法区也是全局共享的，在虚拟机启动时候创建。在一定条件下它也会被GC。这块区域对应Permanent Generation 持久代。 XX：PermSize指定大小。
+方法区也是全局共享的，在虚拟机启动时候创建。在一定条件下它也会被GC。这块区域对应`Permanent Generation` 持久代。 `XX：PermSize`指定大小。
 
 6、<strong>运行时常量池</strong>
 其空间从方法区中分配，存放的为类中固定的常量信息、方法和域的引用信息。
@@ -165,24 +165,24 @@ Java中那些不可达的对象就会变成垃圾。那么什么叫做不可达�
 
 例如： 
 <pre><code class="hljs javascript">
-(1)改变对象的引用，如置为null或者指向其他对象。 
+1.改变对象的引用，如置为null或者指向其他对象。 
    Object x=new Object();//object1 
    Object y=new Object();//object2 
    x=y;//object1 变为垃圾 
    x=y=null;//object2 变为垃圾 
 
-(2)超出作用域 
+2.超出作用域 
    if(i==0){ 
       Object x=new Object();//object1 
    }//括号结束后object1将无法被引用，变为垃圾 
-(3)类嵌套导致未完全释放 
+3.类嵌套导致未完全释放 
    class A{ 
       A a; 
    } 
    A x= new A();//分配一个空间 
    x.a= new A();//又分配了一个空间 
    x=null;//将会产生两个垃圾 
-(4)线程中的垃圾 
+4.线程中的垃圾 
    class A implements Runnable{   
      void run(){ 
        //.... 
@@ -196,7 +196,12 @@ Java中那些不可达的对象就会变成垃圾。那么什么叫做不可达�
 </code></pre>
 
 **JVM中将对象的引用分为了四种类型，不同的对象引用类型会造成GC采用不同的方法进行回收：
+
 * 强引用：默认情况下，对象采用的均为强引用（GC不会回收）  
 * 软引用：软引用是Java中提供的一种比较适合于缓存场景的应用（只有在内存不够用的情况下才会被GC）  
 * 弱引用：在GC时一定会被GC回收  
 * 虚引用：在GC时一定会被GC回收  
+
+本文转载自[SecondLife][SecondLife] JVM 的 工作原理，层次结构 以及 GC工作原理
+
+[SeclonLife]: http://segmentfault.com/blog/exploring/ 
