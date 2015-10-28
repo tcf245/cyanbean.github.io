@@ -8,11 +8,11 @@ tags:	Java JVM
 cover:  "assets/instacode.png"
 ---
 
-JVM是一种用于计算设备的规范，它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。
+Java 虚拟机 Java 虚拟机（Java virtual machine，JVM）是运行 Java 程序必不可少的机制。
 
 ##JVM工作原理
 
-Java 虚拟机 Java 虚拟机（Java virtual machine，JVM）是运行 Java 程序必不可少的机制。JVM实现了Java语言最重要的特征：即平台无关性。原理：编译后的 Java 程序指令并不直接在硬件系统的 CPU 上执行，而是由 JVM 执行。JVM屏蔽了与具体平台相关的信息，使Java语言编译程序只需要生成在JVM上运行的目标字节码（.class）,就可以在多种平台上不加修改地运行。Java 虚拟机在执行字节码时，把字节码解释成具体平台上的机器指令执行。因此实现java平台无关性。它是 Java 程序能在多平台间进行无缝移植的可靠保证，同时也是 Java 程序的安全检验引擎（还进行安全检查）。
+JVM实现了Java语言最重要的特征：即平台无关性。原理：编译后的 Java 程序指令并不直接在硬件系统的 CPU 上执行，而是由 JVM 执行。JVM屏蔽了与具体平台相关的信息，使Java语言编译程序只需要生成在JVM上运行的目标字节码`.class`,就可以在多种平台上不加修改地运行。Java 虚拟机在执行字节码时，把字节码解释成具体平台上的机器指令执行。因此实现java平台无关性。它是 Java 程序能在多平台间进行无缝移植的可靠保证，同时也是 Java 程序的安全检验引擎（还进行安全检查）。
 
 JVM 是 编译后的 Java 程序（.class文件）和硬件系统之间的接口 （ 编译后：javac 是收录于 JDK 中的 Java 语言编译器。该工具可以将后缀名为. java 的源文件编译为后缀名为. class 的可以运行于 Java 虚拟机的字节码。）
 
@@ -83,10 +83,9 @@ Java堆在JVM启动的时候就被创建，堆中储存了各种对象，这些�
 JVM将`Heap`分为两块：新生代`New Generation`和旧生代`Old Generation`
 
 `Note:
-
-* 堆在JVM是所有线程共享的，因此在其上进行对象内存的分配均需要进行加锁，这也是`new`开销比较大的原因。   
-* 鉴于上面的原因，`Sun Hotspot JVM`为了提升对象内存分配的效率，对于所创建的线程都会分配一块独立的空间，这块空间又称为`TLAB `   
-* TLAB仅作用于新生代的`Eden Space`，因此在编写Java程序时，通常多个小的对象比大的对象分配起来更加高效`
+* 堆在JVM是所有线程共享的，因此在其上进行对象内存的分配均需要进行加锁，这也是`new`开销比较大的原因。  
+* 鉴于上面的原因，`Sun Hotspot JVM`为了提升对象内存分配的效率，对于所创建的线程都会分配一块独立的空间，这块空间又称为`TLAB `      
+* TLAB仅作用于新生代的`Eden Space`，因此在编写Java程序时，通常多个小的对象比大的对象分配起来更加高效`  
 
 5、<strong>方法区</strong>
 方法区和堆区域一样，是各个线程共享的内存区域，它用于存储每一个类的结构信息，例如运行时常量池，成员变量和方法数据，构造函数和普通函数的字节码内容，还包括一些在类、实例、接口初始化时用到的特殊方法。当开发人员在程序中通过`Class`对象中的`getName`、`isInstance`等方法获取信息时，这些数据都来自方法区。
@@ -104,7 +103,8 @@ JVM将`Heap`分为两块：新生代`New Generation`和旧生代`Old Generation`
 > of assigning and freeing up memory resources in a program.  
 > java 与 C语言相比的一个优势是，可以通过自己的JVM自动分配和回收内存空间。  
 
-**何为GC？
+**何为GC？  
+
 垃圾回收机制是由垃圾收集器`Garbage Collection` GC来实现的，GC是后台的守护进程。它的特别之处是它是一个低优先级进程，但是可以根据内存的使用情况动态的调整他的优先级。因此，它是在内存中低到一定限度时才会自动运行，从而实现对内存的回收。这就是垃圾回收的时间不确定的原因。
 
 为何要这样设计：因为GC也是进程，也要消耗CPU等资源，如果GC执行过于频繁会对java的程序的执行产生较大的影响（java解释器本来就不快），因此JVM的设计者们选着了不定期的gc。
@@ -113,7 +113,8 @@ GC有关的是: `runtime data area` 中的 `heap`（对象实例会存储在这�
 程序运行期间，所有对象实例存储在运行时数据区域的`heap`中，当一个对象不再被引用（使用），它就需要被收回。在GC过程中，这些不再被使用的对象从heap中收回，这样就会有空间被循环利用。
 GC为内存中不再使用的对象进行回收，GC中调用回收的方法--收集器`garbage collector`. 由于GC要消耗一些资源和时间，Java 在对对象的生命周期特征（eden or survivor）进行分析之后，采用了分代的方式进行对象的收集，以缩短GC对应用造成的暂停。
 
-**在垃圾回收器回收内存之前，还需要一些清理工作。
+**在垃圾回收器回收内存之前，还需要一些清理工作。 
+
 因为垃圾回收gc只能回收通过`new`关键字申请的内存（在堆上），但是堆上的内存并不完全是通过new申请分配的。还有一些本地方法（一般是调用的C方法）。这部分“特殊的内存”如果不手动释放，就会导致内存泄露，gc是无法回收这部分内存的。
 所以需要在`finalize`中用本地方法(native method)如free操作等，再使用gc方法。显示的GC方法是`system.gc()`
 
@@ -124,6 +125,7 @@ GC为内存中不再使用的对象进行回收，GC中调用回收的方法--�
 * 方法三：标记 - 清除算法 `(mark and sweep)`。速度较快，占用空间少，标记清除后会产生大量的碎片。
 
 **JAVA虚拟机中是如何做的？
+
 java的做法很聪明，我们称之为"自适应"的垃圾回收器，或者是"自适应的、分代的、停止-复制、标记-清扫"式垃圾回收器。它会根据不同的环境和需要选择不同的处理方式。
 
 ####heap组成
@@ -139,11 +141,12 @@ heap 的组成有三区域/世代：(可以理解随着时间，对象实例不�
 同理，存在时间更长的实例，对象多次回收没被清除，就从S1 搬到了`tenured`
 * `Perm` 存放运行时数据区的方法区
 
-**Java 不同的世代使用不同的 GC 算法。
+**Java不同的世代使用不同的 GC 算法。
 
 * Minor collection：
 
-新生代 `Young Generation` 使用将 Eden 还有 `Survivor` 内的数据利用 `semi-space `做复制收集`（Copying collection）`， 并将原本`Survivor` 内经过多次垃圾收集仍然存活的对象移动到 `Tenured`。
+新生代 `Young Generation` 使用将 Eden 还有 `Survivor` 内的数据利用 `semi-space `做复制收集`（Copying collection）`， 并将原本`Survivor` 内经过多次垃圾收集仍然存活的对象移动到 `Tenured`。 
+
 * Major collection 则会进行 `Minor collection`，`Tenured` 世代则进行标记压缩收集。
 
 <a href="//tcf245.github.io/assets/images/java/JVM-heap-memory.png" data-lightbox="falcon9-large" data-title="Check out the image ">
@@ -195,7 +198,7 @@ Java中那些不可达的对象就会变成垃圾。那么什么叫做不可达�
   // 这样看，确实在代码执行过程中会产生很多垃圾，不过不用担心，java可以有效地处理他们。
 </code></pre>
 
-**JVM中将对象的引用分为了四种类型，不同的对象引用类型会造成GC采用不同的方法进行回收：
+<strong>JVM中将对象的引用分为了四种类型，不同的对象引用类型会造成GC采用不同的方法进行回收：</strong>
 
 * 强引用：默认情况下，对象采用的均为强引用（GC不会回收）  
 * 软引用：软引用是Java中提供的一种比较适合于缓存场景的应用（只有在内存不够用的情况下才会被GC）  
@@ -204,4 +207,4 @@ Java中那些不可达的对象就会变成垃圾。那么什么叫做不可达�
 
 本文转载自[SecondLife][SecondLife] JVM 的 工作原理，层次结构 以及 GC工作原理
 
-[SeclonLife]: http://segmentfault.com/blog/exploring/ 
+[SeclonLife]:   http://segmentfault.com/blog/exploring/ 
