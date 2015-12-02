@@ -18,7 +18,82 @@ cover:  "assets/instacode.png"
   在这种线程池中，待命线程的数量是一定的，其优点是实现简单。但是这种线程池也有很多缺点，如果需要执行的任务很多，则有可能造成大量的等待；如果需要执行的任务很少，大量待命的线程也可能造成内存的浪费。 
 
   * 可变尺寸的线程池 
-  
+
   这种线程池中待命线程的数量是根据任务负载的需要动态变化的：如果等待执行任务很多，系统会自动扩充待命线程的数量，提高执行效率；如果任务较少，则系统会自动缩减待命线程的数量，减少内存消耗。这种线程池能够很好地克服固定线程池的缺点，但实现起来要复杂的多。
+
+##固定尺寸线程池
+
+    获得一个固定线程池对象是十分方便的，可以通过调用Executor类的静态工厂方法来实现： 
+
+    `ExecutorService threadPool = Executors.newFixedThreadPool(2);` 
+
+    以上就是创建一个为2的固定尺寸线程池方法。
+
+###代码实例
+
+```javascript
+
+MyThreadTest.java
+
+/**
+ * Created by pc9507 on 2015/12/2.
+ * newFixedThreadPool 固定尺寸线程池
+ * 线程池固定尺寸为2，表示其中只有两个待命线程，所以同一时间内只能执行两个任务
+ * 其中一个结束后  Mt3才能开始
+ *
+ * 使用线程池的程序在执行完所有任务后并不会自动退出 而是继续等待任务。
+ * 使用threadPool.shutdown()方法后，程序在执行完任务后退出
+ */
+public class MyThreadTest {
+    public static void main(String[] args) {
+        ExecutorService threadPool = Executors.newFixedThreadPool(2);
+
+        MyThread Mt1 = new MyThread("mt1");
+        MyThread Mt2 = new MyThread("mt2");
+        MyThread Mt3 = new MyThread("mt3");
+
+        threadPool.execute(Mt1);
+        threadPool.execute(Mt2);
+        threadPool.execute(Mt3);
+
+        threadPool.shutdown();
+    }
+}
+```
+
+```javascript
+
+MyThread.java
+
+public class MyThread implements Runnable{
+    private String name;
+    public MyThread(String name) {
+        this.name = name;
+    }
+    @Override
+    public void run() {
+        System.out.println("===Task " + this.name + " begin");
+        for (int i = 0;i < 10 ;i++){
+            System.out.print( "[" + this.name + "_" + i +"];");
+        }
+        System.out.println("===Task " + this.name + " end.");
+    }
+```
+
+
+##可变尺寸线程池
+
+`ExecutorService shrinkThreadPool = Executors.newCachedThreadPool();`
+
+##自定义线程池
+
+前边两种线程池虽然使用起来很方便，但是能够自定义的参数很少，如果有特殊的需求就很难满足。这时可以考虑使用ThreadPoolExecutor类来实现自定义的线程池，其内置了一个线程队列(由BlockingQueue对象来担任)，在有新任务到达时，如何处理满足一下规则：     
+
+* 如果当前线程池中的线程数量比规定标准值少，则倾向于创建新的线程。 
+* 如果当前线程池中的线程数量比规定标准值多，则倾向于把新的任务请求放到队列中。如果队列已满，并且线程数量没有超过最大值，则创建新线程。
+* 如果当前线程池中的线程数量达到最大值，而队列已满，则请求被拒绝。
+* 如果空闲线程超过设定的存活时间，则将空闲线程对象销毁。
+
+
 
 
