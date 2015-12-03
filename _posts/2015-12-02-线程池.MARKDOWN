@@ -25,18 +25,17 @@ cover:  "assets/instacode.png"
 
 ##固定尺寸线程池
 
-    获得一个固定线程池对象是十分方便的，可以通过调用Executor类的静态工厂方法来实现： 
+获得一个固定线程池对象是十分方便的，可以通过调用Executor类的静态工厂方法来实现：
 
     `ExecutorService threadPool = Executors.newFixedThreadPool(2);` 
 
-    以上就是创建一个为2的固定尺寸线程池方法。
+以上就是创建一个为2的固定尺寸线程池方法。
 
 ###代码实例
 
-```javascript
-
 MyThreadTest.java
 
+```java  
 /**
  * Created by pc9507 on 2015/12/2.
  * newFixedThreadPool 固定尺寸线程池
@@ -49,23 +48,20 @@ MyThreadTest.java
 public class MyThreadTest {
     public static void main(String[] args) {
         ExecutorService threadPool = Executors.newFixedThreadPool(2);
-
         MyThread Mt1 = new MyThread("mt1");
         MyThread Mt2 = new MyThread("mt2");
         MyThread Mt3 = new MyThread("mt3");
-
         threadPool.execute(Mt1);
         threadPool.execute(Mt2);
         threadPool.execute(Mt3);
-
         threadPool.shutdown();
     }
-}
+}  
 ```
 
-```javascript
+MyThread.java  
 
-MyThread.java
+```java 
 
 public class MyThread implements Runnable{
     private String name;
@@ -79,7 +75,7 @@ public class MyThread implements Runnable{
             System.out.print( "[" + this.name + "_" + i +"];");
         }
         System.out.println("===Task " + this.name + " end.");
-    }
+    }  
 ```
 
 
