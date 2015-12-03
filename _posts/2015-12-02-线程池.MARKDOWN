@@ -1,10 +1,10 @@
 ﻿---
 layout: post
-title:  "线程池"
+title:  "Java线程池"
 date:   2015-12-02 22:16:24
 author: CyanBean
 categories: Java
-tags:	Java
+tags:   Java 
 cover:  "assets/instacode.png"
 ---
 
