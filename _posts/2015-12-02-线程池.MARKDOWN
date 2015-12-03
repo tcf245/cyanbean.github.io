@@ -81,6 +81,8 @@ public class MyThread implements Runnable{
 
 ##可变尺寸线程池
 
+可变尺寸线程池可以根据任务的多少来自动调整待命线程的数量，优化执行性能。
+
 `ExecutorService shrinkThreadPool = Executors.newCachedThreadPool();`
 
 ##自定义线程池
@@ -91,3 +93,66 @@ public class MyThread implements Runnable{
 * 如果当前线程池中的线程数量比规定标准值多，则倾向于把新的任务请求放到队列中。如果队列已满，并且线程数量没有超过最大值，则创建新线程。
 * 如果当前线程池中的线程数量达到最大值，而队列已满，则请求被拒绝。
 * 如果空闲线程超过设定的存活时间，则将空闲线程对象销毁。
+
+###代码实例
+
+<pre><code>
+
+/**
+ * Created by pc9507 on 2015/12/3.
+ *线程池最大尺寸是4，标准尺寸是2，工作等待队列容量为3，
+ * 因此根据规则不会创建新的线程去执行任务，同时只有两个任务执行，
+ * 其他任务在队列中等待，知道有任务结束在开始执行
+ *
+ * 若将等待容量设置为1，，线程池标准尺寸为2，最大尺寸是4，
+ * 根据规则将会创建新的线程来执行任务，
+ * 一个任务在队列中等待。灯油一个任务之行结束够，在开始执行。
+ */
+public class Main {
+    public static void main(String[] args) {
+        //等待队列容量
+        BlockingQueue queue = new ArrayBlockingQueue(2);
+        //标准尺寸、最大容量、空闲线程存活时间、时间单位、等待队列
+        ThreadPoolExecutor threadPool = new ThreadPoolExecutor(2, 4, 100, TimeUnit.MILLISECONDS, queue);
+        threadPool.execute(new MyTask("Mt1"));
+        threadPool.execute(new MyTask("Mt2"));
+        threadPool.execute(new MyTask("Mt3"));
+        threadPool.execute(new MyTask("Mt4"));
+        System.out.println("当前线程池实际大小为：" + threadPool.getPoolSize());
+        //关闭线程池
+        threadPool.shutdown();
+    }
+}
+
+</code></pre>
+
+<pre><code>
+/**
+ * Created by pc9507 on 2015/12/3.
+ * 任务类
+ */
+public class MyTask implements Runnable {
+    private String name;
+    public MyTask(String name) {
+        this.name = name;
+    }
+    @Override
+    public void run() {
+        System.out.println("[任务 " + this.name + " 开始执行]");
+        for (int i = 0;i < 10 ;i++){
+            System.out.print("[" + this.name + "_" + i + "]");
+        }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("[任务 " + this.name + " 执行结束]");
+    }
+}
+
+</code></pre>
+
+详细代码点击 [github][github]
+
+[github]: https://github.com/tcf245/JavaSamples/tree/master/src/main/java/thread
