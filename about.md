@@ -7,11 +7,18 @@ permalink: /about/
 <img src="{{ site.baseurl }}assets/profile-placeholder.jpg" title="Profile Picture" class="profile">
 
 
-Centrarium is a custom theme for Jekyll, made by [Ben Centra][bencentra] for his own blog. He'd be humbled if you liked it enough to use it as well! Installation and configuration instructions can be found in the [GitHub repository](https://github.com/bencentra/centrarium).
+It's better to burn out,than fade away.
 
-This page is a good place to write about yourself, your project, your product, or whatever it is your site is for. You can replace the image above, or you can get rid of it entirely. 
+java学习中...
+欢迎交流。
 
-You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/). And you can find the source code for Jekyll at [github.com/tcf245](https://github.com/tcf245)
 
-[centrarium]: https://github.com/tcf245
+
+
+
+
+
+如果你喜欢本博客，请访问 [github.com/tcf245][github]
+
+[github]: https://github.com/tcf245/tcf245.github.io
 [jekyll]: https://github.com/jekyll/jekyll
